@@ -1,0 +1,11 @@
+.idea
+.vscode
+.env
+.DS_Store
+src/.DS_Store
+
+src/nginx/*
+!src/nginx/default.txt
+src/mysql/*
+src/redis/*
+src/p3x-redis-ui-settings

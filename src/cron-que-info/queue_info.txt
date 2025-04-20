@@ -1,0 +1,28 @@
+# job icin supervisord
+[program:{projectName-worker}]
+process_name=%(program_name)s_%(process_num)02d
+command=php /var/www/html/{projectName}/artisan queue:work --queue=default
+autostart=true
+autorestart=true
+user=root
+numprocs=8
+redirect_stderr=true
+stdout_logfile=/var/www/html/{projectName}/storage/logs/{projectName-worker}.log
+stopwaitsecs=3600
+
+# horizon kullanilacaksa eger job icin olan kullanilmamali
+[program:{projectName-horizon}]
+process_name=%(program_name)s
+command=php /var/www/html/{projectName}/artisan horizon
+autostart=true
+autorestart=true
+user=root
+redirect_stderr=true
+stdout_logfile=/var/www/html/{projectName}/storage/logs/{projectName-horizon}.log
+stopwaitsecs=3600
+
+
+# horizon icin docker a baglandiktan sonra kullanmak gerekebilir
+supervisorctl reread
+supervisorctl update
+supervisorctl start horizon
